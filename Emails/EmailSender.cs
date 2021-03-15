@@ -32,63 +32,47 @@ public class EmailSender : IDisposable
             _smtpClient = new SmtpClient();
         }
 
-        public void SendTextEmail(string toAddress, string subject, string body)
+        public void SendTextEmail(string toAddress, string subject, string body, IEnumerable<IEmailAttachment> attachments = null)
         {
-            SendTextEmail(new List<string>() { toAddress }, subject, body, new string[]{} );
+            attachments ??= new List<IEmailAttachment>();
+            SendTextEmail(new List<string>() { toAddress }, subject, body, attachments);
         }
 
-        public void SendTextEmail(string toAddress, string subject, string body, string[] attachmentPaths)
+        public void SendTextEmail(IEnumerable<string> toAddress, string subject, string body, IEnumerable<IEmailAttachment> attachments = null)
         {
-            SendTextEmail(new List<string>() { toAddress }, subject, body, attachmentPaths);
-        }
-
-        public void SendTextEmail(IEnumerable<string> toAddress, string subject, string body)
-        {
-            SendTextEmail(toAddress, subject, body, new string[]{});
-        }
-
-        public void SendTextEmail(IEnumerable<string> toAddress, string subject, string body, string[] attachmentPaths)
-        {
-            var message = ConstructTextMimeMessage(toAddress, subject, body, attachmentPaths);
+            attachments ??= new List<IEmailAttachment>();
+            var message = ConstructTextMimeMessage(toAddress, subject, body, attachments);
             SendMimeMessage(message);
         }
 
-        public void SendHtmlEmail(string toAddress, string subject, string body)
+        public void SendHtmlEmail(string toAddress, string subject, string body, IEnumerable<IEmailAttachment> attachments = null)
         {
-            SendHtmlEmail(new List<string>() { toAddress }, subject, body, new string[]{});
+            attachments ??= new List<IEmailAttachment>();
+            SendHtmlEmail(new List<string>() { toAddress }, subject, body, attachments);
         }
 
-        public void SendHtmlEmail(string toAddress, string subject, string body, string[] attachmentPaths)
+        public void SendHtmlEmail(IEnumerable<string> toAddress, string subject, string body, IEnumerable<IEmailAttachment> attachments = null)
         {
-            SendHtmlEmail(new List<string>() { toAddress }, subject, body, attachmentPaths);
-        }
-
-        public void SendHtmlEmail(IEnumerable<string> toAddress, string subject, string body)
-        {
-            SendHtmlEmail(toAddress, subject, body, new string[] { });
-        }
-
-        public void SendHtmlEmail(IEnumerable<string> toAddress, string subject, string body, string[] attachmentPaths)
-        {
-            var message = ConstructHtmlMimeMessage(toAddress, subject, body, attachmentPaths);
+            attachments ??= new List<IEmailAttachment>();
+            var message = ConstructHtmlMimeMessage(toAddress, subject, body, attachments);
             SendMimeMessage(message);
         }
 
         private MimeMessage ConstructTextMimeMessage(IEnumerable<string> toAddress,
-            string subject, string body, IEnumerable<string> attachmentPaths)
+            string subject, string body, IEnumerable<IEmailAttachment> attachments)
         {
             var message = new MimeMessage();
             message = ConstructMessageHeaders(message, toAddress, subject);
-            message = ConstructMessageBody(message, null, body, attachmentPaths);
+            message = ConstructMessageBody(message, null, body, attachments);
             return message;
         }
 
         private MimeMessage ConstructHtmlMimeMessage(IEnumerable<string> toAddress,
-            string subject, string body, IEnumerable<string> attachmentPaths)
+            string subject, string body, IEnumerable<IEmailAttachment> attachments)
         {
             var message = new MimeMessage();
             message = ConstructMessageHeaders(message, toAddress, subject);
-            message = ConstructMessageBody(message, body, null, attachmentPaths);
+            message = ConstructMessageBody(message, body, null, attachments);
             return message;
         }
 
@@ -103,16 +87,26 @@ public class EmailSender : IDisposable
             return message;
         }
 
-        private MimeMessage ConstructMessageBody(MimeMessage message, string htmlBody, string textBody, IEnumerable<string> attachmentPaths)
+        private MimeMessage ConstructMessageBody(MimeMessage message, string htmlBody, string textBody, IEnumerable<IEmailAttachment> attachments)
         {
             var builder = new BodyBuilder();
             builder.HtmlBody = htmlBody;
             builder.TextBody = textBody;
-            if (attachmentPaths != null)
+            if (attachments != null)
             {
-                foreach (var attachmentPath in attachmentPaths)
+                foreach (var attachment in attachments)
                 {
-                    builder.Attachments.Add(attachmentPath);
+                    switch (attachment)
+                    {
+                        case FilepathEmailAttachment att:
+                            builder.Attachments.Add(att.Path);
+                            break;
+                        case ByteEmailAttachment att:
+                            builder.Attachments.Add(att.Filename, att.Content);
+                            break;
+                        default:
+                            throw new InvalidOperationException("Unknown attachment type.");
+                    }
                 }
             }
             message.Body = builder.ToMessageBody();
@@ -171,5 +165,18 @@ public class EmailSender : IDisposable
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+    }
+
+    public interface IEmailAttachment{}
+
+    public class ByteEmailAttachment : IEmailAttachment
+    {
+        public string Filename { get; set; }
+        public byte[] Content { get; set; }
+    }
+
+    public class FilepathEmailAttachment : IEmailAttachment
+    {
+        public string Path { get; set; }
     }
 }
