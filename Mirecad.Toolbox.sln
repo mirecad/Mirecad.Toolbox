@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mirecad.Toolbox.Tests", "Mirecad.Toolbox.Tests\Mirecad.Toolbox.Tests.csproj", "{32B76067-4E2A-4B32-9EC4-BA4721F49D9B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mirecad.Toolbox", "Mirecad.Toolbox\Mirecad.Toolbox.csproj", "{2982CB33-B4FD-4654-8EF5-6AD9A68407CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32B76067-4E2A-4B32-9EC4-BA4721F49D9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32B76067-4E2A-4B32-9EC4-BA4721F49D9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32B76067-4E2A-4B32-9EC4-BA4721F49D9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32B76067-4E2A-4B32-9EC4-BA4721F49D9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2982CB33-B4FD-4654-8EF5-6AD9A68407CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2982CB33-B4FD-4654-8EF5-6AD9A68407CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2982CB33-B4FD-4654-8EF5-6AD9A68407CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2982CB33-B4FD-4654-8EF5-6AD9A68407CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {893EC167-3826-473B-AF27-CBBAB7AF2FA1}
+	EndGlobalSection
+EndGlobal
