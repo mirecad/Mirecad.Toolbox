@@ -7,7 +7,7 @@ namespace Mirecad.Toolbox.Tests.Extensions
     public class StringExtensionsTests
     {
         [Fact]
-        public void CanRemoveLowerCaseDiacritics()
+        public void RemoveDiacriticsCanRemoveLowerCaseDiacritics()
         {
             var input = "ščťžý";
 
@@ -17,7 +17,7 @@ namespace Mirecad.Toolbox.Tests.Extensions
         }
 
         [Fact]
-        public void CanRemoveUpperCaseDiacritics()
+        public void RemoveDiacriticsCanRemoveUpperCaseDiacritics()
         {
             var input = "ŠČŤŽÝ";
 
