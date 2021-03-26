@@ -5,9 +5,6 @@ namespace Mirecad.Toolbox.Extensions
 {
     public static class StringExtensions
     {
-        /// <summary>
-        /// Removes diacritics from string.
-        /// </summary>
         public static string RemoveDiacritics(this string input)
         {
             var normalized = input.Normalize(NormalizationForm.FormD);
@@ -23,5 +20,8 @@ namespace Mirecad.Toolbox.Extensions
 
             return builder.ToString().Normalize(NormalizationForm.FormC);
         }
+
+        public static string RemoveWhiteSpaces(this string input)
+            => System.Text.RegularExpressions.Regex.Replace(input, @"\s+", "");
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAssertions;
+using Mirecad.Toolbox.Extensions;
 using Mirecad.Toolbox.Regex;
 using Xunit;
 
@@ -53,6 +54,26 @@ namespace Mirecad.Toolbox.Tests.Regex
             var match = RegexTools.GetSingleRegexGroupMatch(source, regex, group);
 
             match.Should().Be("test");
+        }
+
+        [Fact]
+        public void RemoveDiacriticsCanRemoveTabsAndSPaces()
+        {
+            var source = "Text     with some \t tabs \t\t   and spaces.";
+
+            var result = source.RemoveWhiteSpaces();
+
+            result.Should().Be("Textwithsometabsandspaces.");
+        }
+
+        [Fact]
+        public void RemoveDiacriticsCanRemoveNewLine()
+        {
+            var source = "line1\n\nline2";
+
+            var result = source.RemoveWhiteSpaces();
+
+            result.Should().Be("line1line2");
         }
     }
 }
