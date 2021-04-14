@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>Miroslav Adamec</Authors>
+    <Company>Madev</Company>
+    <Description>Set of common utility classes commonly used in various projects</Description>
+    <PackageProjectUrl>https://github.com/mirecad/Mirecad.Toolbox</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mirecad/Mirecad.Toolbox</RepositoryUrl>
+    <PackageTags>mirecad madev toolbox tools extensions</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
