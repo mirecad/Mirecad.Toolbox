@@ -10,9 +10,7 @@ namespace Mirecad.Toolbox.Tests.Extensions
         public void RemoveDiacriticsCanRemoveLowerCaseDiacritics()
         {
             var input = "ščťžý";
-
             var result = input.RemoveDiacritics();
-
             result.Should().Be("sctzy");
         }
 
@@ -20,9 +18,7 @@ namespace Mirecad.Toolbox.Tests.Extensions
         public void RemoveDiacriticsCanRemoveUpperCaseDiacritics()
         {
             var input = "ŠČŤŽÝ";
-
             var result = input.RemoveDiacritics();
-
             result.Should().Be("SCTZY");
         }
 
@@ -30,9 +26,7 @@ namespace Mirecad.Toolbox.Tests.Extensions
         public void RemoveDiacriticsCanRemoveTabsAndSPaces()
         {
             var source = "Text     with some \t tabs \t\t   and spaces.";
-
             var result = source.RemoveWhiteSpaces();
-
             result.Should().Be("Textwithsometabsandspaces.");
         }
 
@@ -40,10 +34,32 @@ namespace Mirecad.Toolbox.Tests.Extensions
         public void RemoveDiacriticsCanRemoveNewLine()
         {
             var source = "line1\n\nline2";
-
             var result = source.RemoveWhiteSpaces();
-
             result.Should().Be("line1line2");
+        }
+
+        [Fact]
+        public void GetSubstringBeforeFirstReturnsWholeStringIfDelimiterNotFound()
+        {
+            var source = "asdf";
+            var result = source.GetSubstringBeforeFirst('G');
+            result.Should().Be(source);
+        }
+
+        [Fact]
+        public void GetSubstringBeforeFirstReturnsCorrectSubstring()
+        {
+            var source = "asdf";
+            var result = source.GetSubstringBeforeFirst('d');
+            result.Should().Be("as");
+        }
+
+        [Fact]
+        public void GetSubstringBeforeFirstReturnsEmptyOnEmptyString()
+        {
+            var source = string.Empty;
+            var result = source.GetSubstringBeforeFirst('g');
+            result.Should().Be(string.Empty);
         }
     }
 }

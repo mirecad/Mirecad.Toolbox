@@ -1,13 +1,14 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Text;
 
 namespace Mirecad.Toolbox.Extensions
 {
     public static class StringExtensions
     {
-        public static string RemoveDiacritics(this string input)
+        public static string RemoveDiacritics(this string text)
         {
-            var normalized = input.Normalize(NormalizationForm.FormD);
+            var normalized = text.Normalize(NormalizationForm.FormD);
             var builder = new StringBuilder();
 
             foreach (char ch in normalized)
@@ -21,7 +22,15 @@ namespace Mirecad.Toolbox.Extensions
             return builder.ToString().Normalize(NormalizationForm.FormC);
         }
 
-        public static string RemoveWhiteSpaces(this string input)
-            => System.Text.RegularExpressions.Regex.Replace(input, @"\s+", "");
+        public static string RemoveWhiteSpaces(this string text)
+            => System.Text.RegularExpressions.Regex.Replace(text, @"\s+", "");
+
+        public static string GetSubstringBeforeFirst(this string text, char delimiter)
+        {
+            var charPosition = text.IndexOf(delimiter, StringComparison.Ordinal);
+            return charPosition > 0 
+                ? text.Substring(0, charPosition) 
+                : text;
+        }
     }
 }
