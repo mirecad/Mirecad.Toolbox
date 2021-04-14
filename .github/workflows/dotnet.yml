@@ -46,5 +46,5 @@ jobs:
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
         PROJECT_FILE_PATH: Mirecad.Toolbox/Mirecad.Toolbox.csproj
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         VERSION_STATIC: ${{steps.gitversion.outputs.semVer}}
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
