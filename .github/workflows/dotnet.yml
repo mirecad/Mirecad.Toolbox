@@ -43,7 +43,7 @@ jobs:
         echo "SemVer: $GITVERSION_SEMVER"
         
     - name: Publish nuget package
-      uses: brandedoutcast/publish-nuget@v2.5.2
+      uses: rohith/publish-nuget@v2
       with:
         PROJECT_FILE_PATH: Mirecad.Toolbox/Mirecad.Toolbox.csproj
         VERSION_STATIC: ${{steps.gitversion.outputs.semVer}}
