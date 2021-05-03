@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.DataContracts;
 
 namespace Mirecad.Toolbox.Extensions
 {
