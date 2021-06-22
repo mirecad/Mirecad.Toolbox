@@ -39,6 +39,14 @@ namespace Mirecad.Toolbox.Tests.Extensions
         }
 
         [Fact]
+        public void RemoveSubstringCanRemoveSubstringWithNewLine()
+        {
+            var source = "line1\n\nline2";
+            var result = source.RemoveSubstring("ne1\n\nli");
+            result.Should().Be("line2");
+        }
+
+        [Fact]
         public void GetSubstringBeforeFirstReturnsWholeStringIfDelimiterNotFound()
         {
             var source = "asdf";

@@ -25,6 +25,9 @@ namespace Mirecad.Toolbox.Extensions
         public static string RemoveWhiteSpaces(this string text)
             => System.Text.RegularExpressions.Regex.Replace(text, @"\s+", "");
 
+        public static string RemoveSubstring(this string text, string substring)
+            => text.Replace(substring, "");
+
         public static string GetSubstringBeforeFirst(this string text, char delimiter)
         {
             var charPosition = text.IndexOf(delimiter, StringComparison.Ordinal);
