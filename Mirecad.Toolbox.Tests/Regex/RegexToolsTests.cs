@@ -55,5 +55,17 @@ namespace Mirecad.Toolbox.Tests.Regex
 
             match.Should().Be("test");
         }
+
+        [Fact]
+        public void GetSingleRegexGroupWithStringAsRegexCanReturnCorrectMatch()
+        {
+            var source = "prefix<test>suffix";
+            var regex = "<(?<group>.*)>";
+            var group = "group";
+
+            var match = RegexTools.GetSingleRegexGroupMatch(source, regex, group);
+
+            match.Should().Be("test");
+        }
     }
 }

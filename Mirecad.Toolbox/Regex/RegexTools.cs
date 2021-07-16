@@ -22,5 +22,8 @@ namespace Mirecad.Toolbox.Regex
                 _ => throw new InvalidOperationException("More than one regex match found.")
             };
         }
+
+        public static string GetSingleRegexGroupMatch(string source, string regex, string groupName)
+            => GetSingleRegexGroupMatch(source, new System.Text.RegularExpressions.Regex(regex), groupName);
     }
 }
