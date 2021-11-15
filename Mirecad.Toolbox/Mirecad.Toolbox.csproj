@@ -18,6 +18,7 @@
     </PackageReference>
     <PackageReference Include="MailKit" Version="2.11.0" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.17.0" />
+    <PackageReference Include="Microsoft.Graph" Version="4.10.0" />
   </ItemGroup>
 
 </Project>

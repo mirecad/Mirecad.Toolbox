@@ -6,7 +6,7 @@ using MimeKit;
 
 namespace Mirecad.Toolbox.Emails
 {
-public class EmailSender : IDisposable
+    public class SmtpEmailSender : IDisposable, IEmailSender
     {
         private SmtpClient _smtpClient;
         private readonly string _senderAddress;
@@ -16,7 +16,7 @@ public class EmailSender : IDisposable
         private readonly string _server;
         private readonly int _port;
 
-        public EmailSender(string server, int port, string username, string password)
+        public SmtpEmailSender(string server, int port, string username, string password)
         {
             var isAddressFormat = username.Contains("@");
             if (isAddressFormat == false)
@@ -165,18 +165,5 @@ public class EmailSender : IDisposable
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-    }
-
-    public interface IEmailAttachment{}
-
-    public class ByteEmailAttachment : IEmailAttachment
-    {
-        public string Filename { get; set; }
-        public byte[] Content { get; set; }
-    }
-
-    public class FilepathEmailAttachment : IEmailAttachment
-    {
-        public string Path { get; set; }
     }
 }
