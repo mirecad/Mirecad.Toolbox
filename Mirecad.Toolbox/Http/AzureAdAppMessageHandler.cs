@@ -29,9 +29,9 @@ namespace Mirecad.Toolbox.Http
                 lock (_lock)
                 {
                     ObtainBearerTokenAsync().GetAwaiter().GetResult();
-                }
-                request.Headers.Remove("Authorization");
+                }                
             }
+            request.Headers.Remove("Authorization");
             request.Headers.Add("Authorization", "Bearer " + _bearerToken);
             return await base.SendAsync(request, cancellationToken)
                 .ConfigureAwait(false);
