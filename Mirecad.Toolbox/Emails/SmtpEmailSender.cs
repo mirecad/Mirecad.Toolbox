@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using MailKit;
 using MailKit.Net.Smtp;
 using MimeKit;
@@ -99,7 +100,9 @@ namespace Mirecad.Toolbox.Emails
                     switch (attachment)
                     {
                         case FilepathEmailAttachment att:
-                            builder.Attachments.Add(att.Path);
+                            var filename = Path.GetFileName(att.Path);
+                            var content = File.ReadAllBytes(att.Path);
+                            builder.Attachments.Add(filename, content);
                             break;
                         case ByteEmailAttachment att:
                             builder.Attachments.Add(att.Filename, att.Content);
