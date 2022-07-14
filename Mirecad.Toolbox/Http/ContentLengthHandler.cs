@@ -2,7 +2,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Invia.TextExtractor.Core.Infrastructure
+namespace Mirecad.Toolbox.Http
 {
     /// <summary>
     /// Adds Content-Length header base of length of actual content.
