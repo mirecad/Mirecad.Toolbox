@@ -2,6 +2,8 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
 using Microsoft.Identity.Client;
 
 namespace Mirecad.Toolbox.Http
@@ -15,6 +17,11 @@ namespace Mirecad.Toolbox.Http
 
         private string _bearerToken;
         private DateTimeOffset _tokenExpiresOnUtc = DateTimeOffset.MinValue;
+
+        public AzureAdAppMessageHandler(string resourceId)
+        {
+            _scopes = new[] { resourceId + "/.default" };
+        }
 
         public AzureAdAppMessageHandler(IConfidentialClientApplication appCredential, string resourceId)
         {
@@ -39,10 +46,28 @@ namespace Mirecad.Toolbox.Http
 
         private async Task ObtainBearerTokenAsync()
         {
+            if (_app is null)
+            {
+                await ObtainDefaultCredentialTokenAsync();
+                return;
+            }
+            await ObtainClientAppTokenAsync();
+        }
+
+        private async Task ObtainClientAppTokenAsync()
+        {
             var authenticationResult = await _app.AcquireTokenForClient(_scopes)
                 .ExecuteAsync();
             _tokenExpiresOnUtc = authenticationResult.ExpiresOn;
             _bearerToken = authenticationResult.AccessToken;
+        }
+
+        private async Task ObtainDefaultCredentialTokenAsync()
+        {
+            var credential = new DefaultAzureCredential();
+            var token = await credential.GetTokenAsync(new TokenRequestContext(_scopes));
+            _tokenExpiresOnUtc = token.ExpiresOn;
+            _bearerToken = token.Token.Replace("Bearer ", "");
         }
 
         private bool ShouldRegenerateToken()
