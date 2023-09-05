@@ -69,5 +69,15 @@ namespace Mirecad.Toolbox.Tests.Extensions
             var result = source.GetSubstringBeforeFirst('g');
             result.Should().Be(string.Empty);
         }
+
+        [Theory]
+        [InlineData("asdf", 5, "asdf")]
+        [InlineData("asdf", 4, "asdf")]
+        [InlineData("asdf", 3, "asd")]
+        public void TruncateReturnsCorrectSubstring(string source, int maxLength, string expected)
+        {
+            var result = source.Truncate(maxLength);
+            result.Should().Be(expected);
+        }
     }
 }

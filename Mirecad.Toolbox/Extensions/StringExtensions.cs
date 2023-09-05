@@ -35,5 +35,14 @@ namespace Mirecad.Toolbox.Extensions
                 ? text.Substring(0, charPosition) 
                 : text;
         }
+
+        public static string Truncate(this string text, int maxLength)
+        {
+            if (text.Length > maxLength)
+            {
+                return text.Substring(0, maxLength);
+            }
+            return text;
+        }
     }
 }
