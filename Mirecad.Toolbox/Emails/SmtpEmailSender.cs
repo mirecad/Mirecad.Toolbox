@@ -17,7 +17,7 @@ namespace Mirecad.Toolbox.Emails
         private readonly string _server;
         private readonly int _port;
 
-        public SmtpEmailSender(string server, int port, string username, string password)
+        public SmtpEmailSender(string server, int port, string username, string password, string? localDomain)
         {
             var isAddressFormat = username.Contains("@");
             if (isAddressFormat == false)
@@ -31,6 +31,10 @@ namespace Mirecad.Toolbox.Emails
             _port = port;
             _senderAddress = username;
             _smtpClient = new SmtpClient();
+            if(localDomain != null)
+            {
+                _smtpClient.LocalDomain = localDomain;
+            }
         }
 
         public void SendTextEmail(string toAddress, string subject, string body, IEnumerable<IEmailAttachment> attachments = null)
